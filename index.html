@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اے آئی ماہر تعمیرات اور ہیٹ پروفنگ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        :root {
+            --primary: #019247;
+            --primary-dark: #017036;
+            --secondary: #f58220;
+            --secondary-dark: #d97018;
+            --bg-color: #f4f9f5;
+            --chat-bg: #ffffff;
+            --user-msg: #fff5eb;
+            --ai-msg: #f9fbf9;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Noto Nastaliq Urdu', Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 100% 100%, rgba(1, 146, 71, 0.05) 0%, transparent 50%), 
+                              radial-gradient(circle at 0% 0%, rgba(245, 130, 32, 0.05) 0%, transparent 50%);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--chat-bg);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 94vh;
+            overflow: hidden;
+            border: 1px solid rgba(1, 146, 71, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            line-height: 1.5;
+            border-bottom: 4px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-logo {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60px;
+            filter: brightness(0) invert(1); /* Makes the logo pure white */
+            z-index: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .header-logo:hover {
+            transform: translateY(-50%) scale(1.1);
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.5));
+        }
+
+        .header-prof-img {
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .header-prof-img:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            border-color: #ffffff;
+        }
+
+        .header-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: 5px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .header-title:hover {
+            transform: scale(1.05);
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Subtle shine effect on header */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shine 6s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .header span {
+            font-size: 1.15rem;
+            font-weight: normal;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 25px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: 'Noto Nastaliq Urdu', Arial, sans-serif;
+            text-align: center;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .header span:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scroll-behavior: smooth;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .message {
+            padding: 18px 24px;
+            border-radius: 20px;
+            max-width: 82%;
+            line-height: 2.2;
+            font-size: 1.15rem;
+            word-wrap: break-word;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background-color: var(--user-msg);
+            color: #5c350e;
+            align-self: flex-start; 
+            border-top-right-radius: 4px;
+            border: 1px solid rgba(245, 130, 32, 0.15);
+        }
+
+        .message.ai {
+            background-color: var(--ai-msg);
+            align-self: flex-end;
+            border-top-left-radius: 4px;
+            border: 1px solid rgba(1, 146, 71, 0.1);
+        }
+
+        .loading {
+            align-self: flex-end;
+            background: var(--ai-msg);
+            border: 1px solid rgba(1, 146, 71, 0.1);
+            border-radius: 20px;
+            border-top-left-radius: 4px;
+            padding: 15px 25px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            color: #7f8c8d;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+            opacity: 0.7;
+        }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .input-area {
+            display: flex;
+            padding: 20px 25px;
+            background: #ffffff;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.02);
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 18px 25px;
+            border: 2px solid #eef2f0;
+            border-radius: 15px;
+            font-family: 'Noto Nastaliq Urdu', Arial, sans-serif;
+            font-size: 1.15rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #fafcfa;
+        }
+
+        .input-area input:focus {
+            border-color: rgba(1, 146, 71, 0.4);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(1, 146, 71, 0.1);
+        }
+
+        .input-area button {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 0 35px;
+            margin-right: 15px;
+            border-radius: 15px;
+            font-family: 'Noto Nastaliq Urdu', Arial, sans-serif;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 15px rgba(245, 130, 32, 0.25);
+        }
+
+        .input-area button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 130, 32, 0.35);
+        }
+
+        .input-area button:active {
+            transform: translateY(1px);
+        }
+
+        .input-area button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                height: 100vh;
+                height: 100dvh;
+                border-radius: 0;
+                border: none;
+            }
+            .message {
+                max-width: 90%;
+            }
+            .header {
+                font-size: 1.5rem;
+                padding: 60px 15px 20px 15px;
+            }
+            .header-logo {
+                top: 30px;
+                left: 20px;
+                height: 35px;
+            }
+            .header-prof-img {
+                top: 30px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+            }
+            .input-area {
+                padding: 15px;
+            }
+            .input-area input {
+                padding: 15px 20px;
+            }
+            .input-area button {
+                padding: 0 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="prof.jpg" alt="Professor Munawar Ahmed Malik" class="header-prof-img" onerror="this.src='https://sober.pk/wp-content/uploads/2023/05/sober-web-logo.png'; this.style.filter='brightness(0) invert(1)'">
+        <img src="https://sober.pk/wp-content/uploads/2023/05/sober-web-logo.png" alt="Sober Logo" class="header-logo">
+        <div class="header-title">AI SOBER Expert</div>
+        <span>پاکستانی ماحول کے مطابق، آپ کا اپنا مشیر</span>
+    </div>
+    <div class="chat-box" id="chatBox">
+        <div class="message ai">
+            السلام علیکم! سوبر ٹیکنالوجیز میں خوش آمدید۔ میں آپ کا ہیٹ پروفنگ اور واٹر پروفنگ اسپیشلسٹ ہوں۔ 
+<br><br>
+بہترین مشورے اور ایسٹیمیٹ کے لیے، براہ کرم مجھے درج ذیل معلومات فراہم کریں:
+<br>
+1. آپ کی چھت کا کل ایریا (مربع فٹ میں) کتنا ہے؟
+<br>
+2. آپ کی چھت کس قسم کی ہے (جیسے لنٹر، ٹی آئرن وغیرہ)؟
+<br>
+3. آپ کس شہر سے ہیں؟
+        </div>
+        <div class="loading" id="loadingDiv">
+            <span style="font-family: Arial, sans-serif; font-size: 0.8rem; margin-left: 5px;">...</span> سوچ رہا ہے 
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="اپنا سوال یہاں لکھیں..." autocomplete="off" onkeypress="handleKeyPress(event)">
+        <button id="sendBtn" onclick="sendMessage()">بھیجیں</button>
+    </div>
+</div>
+
+<script>
+    const API_KEY = "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";
+    const API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+    let chatHistory = [
+        {
+            role: "system",
+            content: `Persona:
+You are the official AI Expert of SOBER Technologies. Your name is "Sober Heatproofing Assistant." Your tone must be extremely helpful, professional, and confident. Your goal is to guide customers toward the best heatproofing and waterproofing solutions.
+
+Core Instructions:
+- Step 1: Always ask the customer three questions (if not already answered): 
+  1. What is your total roof area (in square feet)?
+  2. What type of roof do you have (e.g., concrete slab, T-iron, mud roof, etc.)?
+  3. Which city are you from?
+- Step 2: Analyze the roof type provided by the customer based on these STRICT rules:
+  * Mud Roof (Mitti ki chhat): NO product can be applied on the roof itself. However, if sunlight hits the walls directly, Solar Coating can be applied to those walls.
+  * T-Iron/Girder Roof: ONLY Solar Coating can be applied. Solar Chips and Solar Tiles (MAT) CANNOT be applied due to their heavy weight, no matter how strong the roof is from top.
+  * Concrete Slab (Lanter) with Mud Layer (Mitti/Gara): Nothing can be applied directly on the mud layer. If bricks, cement, or concrete is placed OVER the mud layer, then all three products can be used.
+- Step 3: Based on the valid products for their roof type, generate a brief (3 to 4 lines) estimate:
+  * Solar Coating: Calculate rough cost (Area / 450 sq.ft * 7500 PKR). Mention Life Span: 3 to 5 years.
+  * MAT (Solar Tiles): Calculate rough cost (Area * 250 PKR to 300 PKR). Mention Life Span: Lifetime.
+  * Solar Chips: Provide a rough estimate. Mention Life Span: Lifetime.
+  NOTE: DO NOT PROVIDE ANY WEBSITE LINKS FOR THE ESTIMATE.
+- Keep the estimate response concise and use Urdu for communication.
+- If a customer asks about specific professional services, direct them to contact us on WhatsApp at 0300-6786890.
+
+Knowledge Base for Training:
+
+1. Company Introduction:
+SOBER Technologies is the pioneer company for heatproofing and waterproofing in Pakistan, providing services since 1996. Founded by Professor Munawar Ahmad Malik, the company has served thousands of satisfied customers, including prestigious institutions like NUST, Quaid-e-Azam University, and Atomic Energy commissions.
+
+2. Products
+A. Munawar Air Conditioning Tile (MAT):
+Description: An advanced tile that keeps rooms cool in summer and warm in winter.
+Features: White color, marble-like polished surface, and Lifetime Guarantee.
+Price: Dual-season (MAT) @ PKR 300/sq. ft. | Summer-only cooling tile @ PKR 250/sq. ft.
+Best Use: For existing houses where heatproofing is the primary concern rather than active leakage.
+
+B. Solar Chips (Cooling Chips):
+Description: A permanent solution for both heatproofing and 100% waterproofing.
+Composition: یہ ایک خاص مکسچر ہے جو سولر پاوڈر، سفید سیمنٹ اور خاص ایگریگیٹ اور کیمیکلز سے بنا ہوتا ہے۔
+Best Use: For new constructions (applied directly on the concrete slab/lanter). A superior alternative to traditional mud and tile (Tusu).
+
+C. Solar Roof Coating:
+Description: A liquid-based heat-reflective and waterproof coating.
+Packaging: 27kg bucket (15L liquid + 12kg Solar Powder).
+Coverage: Covers 400–500 sq. ft. with a double coat.
+Price: PKR 7,500 per bucket.
+Life Span: 3 to 5 years.
+Usage: Can be applied with a brush on any roof, wall, iron sheet, or water tank.
+
+D. Solar Plaster:
+Usage: For East and West-facing walls. It eliminates the need for paint while keeping walls cool for a lifetime.
+
+3. Frequently Asked Questions (FAQs)
+Q: How much can I save on electricity bills?
+A: About 70% of electricity is wasted cooling down hot walls and roofs. Using SOBER products can reduce AC bills by up to 60%.
+Q: Does Solar Coating wash away in rain?
+A: No, once dry, it becomes durable and waterproof. It does not wash away even in heavy rain.
+Q: Can I apply the coating myself?
+A: Yes. Wash the roof thoroughly, mix the components, and apply a double coat using a brush. Use the mixture within 2 hours of mixing.
+Q: Should we use Thermopole sheets on the roof?
+A: We do not recommend it for homes. Thermopole eventually compresses, causing cracks and permanent seepage issues that are very expensive to fix.
+Q: Can these products be used on T-Iron/Girder roofs?
+A: Solar Roof Coating is ideal for T-Iron roofs as it is lightweight. Tiles and Chips are only recommended for concrete slabs due to their weight.
+
+4. Standard Operating Procedures (SOPs)
+For Solar Chips: Create 2x2 boxes with marble strips. Cure the base for 3-4 days. Fill the chips in the evening when the roof is cool. Cure for 7 days before grinding/polishing.
+For MAT Tiles: Use a soft 1:3 mortar ratio. Leave a 1-1.5 unit gap between tiles for white cement grouting. Use a rubber hammer to avoid breakage.
+
+Expert Input & Guidance:
+- Maintenance Rules (CRITICAL): 
+  * Solar Chips and Solar Tiles (MAT) have a LIFETIME guarantee. They DO NOT require any yearly maintenance or reapplication. NEVER suggest checking them yearly.
+  * Solar Coating should be checked every year. If its surface becomes dirty or dusty, advise the customer to wash the roof using water mixed with surf (detergent) and scrub it gently with a soft cloth to restore its reflectiveness. DO NOT suggest reapplying it yearly.
+- Location: The head office/factory is in Islamabad, but delivery is available all over Pakistan.
+- Video Evidence: If customers ask about crack repair, refer them to the YouTube channel "Cool Your Home" for step-by-step guides.
+- Performance: Remind customers that after Solar Coating, one can stand barefoot on the roof even at 2:00 PM in peak summer.
+
+Assistant Closing Instructions:
+Instruction: When a conversation is ending, or the user is satisfied, provide the following social media links and invite the customer to subscribe/follow. ONLY at the end.
+Closing Script (must use these exact words when closing):
+"ہماری ٹیم چاہتی ہے کہ آپ بھی سوبر ٹیکنالوجیز کی سوشل میڈیا فیملی کا حصہ بنیں تاکہ آپ کو ہماری نئی ویڈیوز، پروڈکٹس اور اپڈیٹس سب سے پہلے مل سکیں۔
+آپ سے گزارش ہے کہ اپنے قیمتی وقت میں سے صرف دو منٹ نکال کر ان لنکس پر ہمیں جوائن کر لیں:
+📘 فیس بک پروفائل: https://www.facebook.com/share/18F9DXwHeD/
+📘 فیس بک پیج (Cool Your Home): https://www.facebook.com/share/1BSDciYRdX/
+▶️ یوٹیوب چینل: https://youtube.com/@coolyourhome7682?si=i89fh5i1XMGh28ZH
+آپ کی سپورٹ اور حوصلہ افزائی ہمارے لیے بہت اہم ہے۔ شکریہ!"`
+        },
+        {
+            role: "assistant",
+            content: "السلام علیکم! سوبر ٹیکنالوجیز میں خوش آمدید۔ میں آپ کا ہیٹ پروفنگ اور واٹر پروفنگ اسپیشلسٹ ہوں۔\n\nبہترین مشورے اور ایسٹیمیٹ کے لیے، براہ کرم مجھے درج ذیل معلومات فراہم کریں:\n1. آپ کی چھت کا کل ایریا (مربع فٹ میں) کتنا ہے؟\n2. آپ کی چھت کس قسم کی ہے (جیسے لنٹر، ٹی آئرن وغیرہ)؟\n3. آپ کس شہر سے ہیں؟"
+        }
+    ];
+
+    const chatBox = document.getElementById("chatBox");
+    const loadingDiv = document.getElementById("loadingDiv");
+    const userInput = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function handleKeyPress(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    }
+
+    async function sendMessage() {
+        const text = userInput.value.trim();
+        if (!text) return;
+
+        // Add user message to UI
+        addMessageToUI(text, "user");
+        userInput.value = "";
+        
+        // Add to history
+        chatHistory.push({ role: "user", content: text });
+
+        // Show loading state
+        toggleLoading(true);
+
+        try {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "llama-3.3-70b-versatile", // Using Llama 3.3 70B for better Urdu understanding and professional output
+                    messages: chatHistory,
+                    temperature: 0.6,
+                    max_tokens: 1500
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+
+            const data = await response.json();
+            const aiResponseText = data.choices[0].message.content;
+
+            // Add AI message to history and UI
+            chatHistory.push({ role: "assistant", content: aiResponseText });
+            addMessageToUI(aiResponseText, "ai");
+
+        } catch (error) {
+            console.error(error);
+            addMessageToUI("معذرت، اس وقت سرور سے رابطہ نہیں ہو پا رہا یا کوئی تکنیکی مسئلہ ہے۔ براہ کرم کچھ دیر بعد دوبارہ کوشش کریں۔", "ai");
+            chatHistory.pop(); // Remove user message from history on error to let them retry properly
+        } finally {
+            toggleLoading(false);
+        }
+    }
+
+    function addMessageToUI(text, sender) {
+        const msgDiv = document.createElement("div");
+        msgDiv.classList.add("message", sender);
+        
+        // Basic Markdown to HTML conversion for bold text and line breaks
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        formattedText = formattedText.replace(/\n/g, '<br>');
+
+        msgDiv.innerHTML = formattedText;
+        
+        // Insert right before the loading indicator
+        chatBox.insertBefore(msgDiv, loadingDiv);
+        
+        if (sender === 'ai') {
+            setTimeout(() => {
+                const prevMsg = msgDiv.previousElementSibling;
+                if (prevMsg && prevMsg.classList.contains('user')) {
+                    chatBox.scrollTo({
+                        top: prevMsg.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    chatBox.scrollTo({
+                        top: msgDiv.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 50);
+        } else {
+            scrollToBottom();
+        }
+    }
+
+    function toggleLoading(show) {
+        loadingDiv.style.display = show ? "flex" : "none";
+        sendBtn.disabled = show;
+        userInput.disabled = show;
+        if (show) scrollToBottom();
+        else userInput.focus();
+    }
+
+    function scrollToBottom() {
+        // Use setTimeout to ensure DOM has updated before scrolling
+        setTimeout(() => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 50);
+    }
+</script>
+</body>
+</html>
